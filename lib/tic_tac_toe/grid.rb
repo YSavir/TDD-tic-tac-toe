@@ -14,4 +14,8 @@ class TicTacToe::Grid
     @cells.find { |cell| cell.coordinates == [x_coordinate, y_coordinate] }
   end
 
+  def cells_with_values
+    cells.select { |cell| cell.value }
+  end
+
 end
