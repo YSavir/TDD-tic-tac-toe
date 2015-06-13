@@ -2,12 +2,13 @@ class TicTacToe::Game
   attr_reader :players
 
   def initialize
+    @interface = TicTacToe::Interface.new
     @players = []
     @symbols_in_use = []
   end
 
   def add_player
-    human = check_humanity
+    human = @interface.is_player_human?
     symbol = human ? symbol_for_human : symbol_for_computer
     @players << TicTacToe::Player.new(symbol, human)
   end
@@ -21,19 +22,6 @@ class TicTacToe::Game
   end
 
   private
-
-  def check_humanity
-    response = nil
-    human_options = ['yes', 'y']
-    computer_options = ['no', 'n']
-    options = human_options + computer_options
-    while !options.include? response
-      $stdout.puts "Is this a human player? (y/n)"
-      response = $stdin.gets.strip
-      puts "Sorry, I didn\'t understand that." unless options.include? response 
-    end
-    return human_options.include? response
-  end
 
   def symbol_for_human
     response = nil
