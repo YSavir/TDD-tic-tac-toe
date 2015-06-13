@@ -18,4 +18,8 @@ class TicTacToe::Grid
     cells.select { |cell| cell.value }
   end
 
+  def available_cells
+    cells.select { |cell| !cell.value }
+  end
+
 end
