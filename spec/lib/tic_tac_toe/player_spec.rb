@@ -36,4 +36,11 @@ RSpec.describe TicTacToe::Player, :type => :model do
     end
   end
 
+  describe '#take_turn' do
+    describe 'when the player is a computer' do
+      it 'should pick a random cell without a value' do
+      end
+    end
+  end
+
 end
