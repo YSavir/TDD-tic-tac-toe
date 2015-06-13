@@ -6,6 +6,33 @@ RSpec.describe TicTacToe::Game, :type => :model do
     reset_input!
   end
 
+  describe '#create_grid' do
+    describe 'when adding a 3x3 grid' do
+      it 'should create an appropriate grid' do
+        game = TicTacToe::Game.new
+        expect(TicTacToe::Grid).to receive(:new).with(3, 3)
+        
+        game.create_grid(3, 3)
+      end
+    end
+
+    describe 'when adding a 2x2 grid' do
+      it 'should creat the appropriate grid' do
+        game = TicTacToe::Game.new
+        expect(TicTacToe::Grid).to receive(:new).with(2, 2)
+
+        game.create_grid(2, 2)
+      end
+    end
+
+    it 'should maintain access to the grid' do
+      game = TicTacToe::Game.new
+      grid = game.create_grid(3, 3)
+
+      expect(game.grid).to be(grid)
+    end
+  end
+
   describe '#add_player' do
     describe 'when adding a human player' do
       it 'should create a new human player' do
@@ -49,7 +76,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
       game = TicTacToe::Game.new
       game.add_player
 
-      expect(game.players).to have_exactly(1).players
+      expect(game.players).to have_exactly(1).player
     end
 
   end
