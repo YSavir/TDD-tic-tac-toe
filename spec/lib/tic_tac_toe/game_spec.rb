@@ -7,18 +7,28 @@ RSpec.describe TicTacToe::Game, :type => :model do
   end
 
   describe '#add_player' do
-    before :each do
-      capture_output!
-    end
-
     describe 'when adding a human player' do
       it 'should create a new human player' do
+        capture_output!
         set_input! 'y', 'X'
         game = TicTacToe::Game.new
 
         expect(TicTacToe::Player).to receive(:new).with('X', true)
 
         game.add_player
+      end
+
+      describe 'and some symbols are already taken' do
+        it 'should continue to ask for symbols until a valid one is given' do
+          capture_output!
+          game = TicTacToe::Game.new
+          set_input! 'y', 'X'
+          game.add_player
+          set_input! 'y', 'X', 'O'
+          game.add_player
+
+          expect(game.players.last.symbol).to eq('O')
+        end
       end
     end
     
@@ -41,6 +51,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
 
       expect(game.players).to have_exactly(1).players
     end
+
   end
 
   describe '#players' do
