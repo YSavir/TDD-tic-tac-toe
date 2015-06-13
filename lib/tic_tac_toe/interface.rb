@@ -11,6 +11,17 @@ class TicTacToe::Interface
     return valid_human_options.include? response
   end
 
+  def get_symbol(invalid_symbols=[])
+    valid_response = false
+    until valid_response
+      $stdout.puts "What symbol would you like to use?"
+      response = $stdin.gets.strip
+      valid_response = !invalid_symbols.include?(response)
+      $stdout.puts "Sorry, #{response} is already taken" unless valid_response
+    end
+    return response
+  end
+
   private
 
   def valid_human_options

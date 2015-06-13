@@ -5,6 +5,7 @@ RSpec.describe TicTacToe::Interface do
     reset_input!
     reset_output!
   end
+  
   describe '#is_player_human?' do
     it 'should be true if the user chooses human' do
       set_input! 'y'
@@ -34,7 +35,46 @@ RSpec.describe TicTacToe::Interface do
        
       expect(error_lines).to have_exactly(2).lines
    end
-   
+  end
+
+  describe '#get_symbol' do
+    describe 'with a human player' do
+      describe 'and the player chooses \'☯\'' do
+        it 'should return \'☯\'' do
+          set_input! '☯'
+          capture_output!
+          interface = TicTacToe::Interface.new
+
+          expect(interface.get_symbol).to eq('☯')
+        end
+      end
+
+      describe 'and the player chooses \'X\'' do
+        it 'should return \'X\'' do
+          set_input! 'X'
+          capture_output!
+          interface = TicTacToe::Interface.new
+
+          expect(interface.get_symbol).to eq('X')
+        end
+
+        describe 'but X is already taken' do
+          it 'should wait until an unused symbol is given' do
+            set_input! 'X', 'X', '☯'
+            capture_output!
+            interface = TicTacToe::Interface.new
+            interface.get_symbol(['X'])
+            $stdout.rewind
+            error_lines = $stdout.readlines.select do |line|
+              line.match /Sorry, . is already taken/
+            end
+       
+            expect(error_lines).to have_exactly(2).lines
+          end
+        end
+      end
+
+    end
   end
 end
 
