@@ -116,8 +116,25 @@ RSpec.describe TicTacToe::Game, :type => :model do
 
   describe '#turn_for' do
     it 'should get a cell the current player and fill it with that palayer\'s symbol' do
-      game = TicTacToe::Game.new
+      game = build :game_with_grid
+      player = build :computer_player
+
+      game.turn_for(player) 
+
+      expect(game.grid.cells_with_values).to have_exactly(1).cell
+    end
+
+    it 'should only fill in grids with no values' do
+      game = build :game_with_grid
+      player = build :human_player
+      game.grid[1, 1].value = 'X'
       
+      io_channel do |ch|
+        ch.set_input '1, 1', '1, 2'
+        game.turn_for(player)
+      end
+
+      expect(game.grid.cells_with_values).to have_exactly(2).cell
     end
   end
 

@@ -20,6 +20,11 @@ class TicTacToe::Game
     @players
   end
 
+  def turn_for(player)
+    cell = player.choose_cell(@grid.available_cells)
+    cell.value = player.symbol
+  end
+
   private
 
   def get_computer_symbol
