@@ -1,35 +1,35 @@
 require 'spec_helper'
 
 RSpec.describe TicTacToe::Interface do
-  after :each do
-    reset_input!
-    reset_output!
-  end
   
   describe '#is_player_human?' do
     it 'should be true if the user chooses human' do
-      set_input! 'y'
-      capture_output!
       interface = TicTacToe::Interface.new
 
-      expect(interface.is_player_human?).to be true
+      io_channel do |ch|
+        ch.set_input 'y'
+        expect(interface.is_player_human?).to be true
+      end
     end
 
     it 'should be false if the user chooses not human' do
-      set_input! 'n'
-      capture_output!
       interface = TicTacToe::Interface.new
 
-      expect(interface.is_player_human?).to be false
+      io_channel do |ch|
+        ch.set_input 'n'
+        expect(interface.is_player_human?).to be false
+      end
     end
 
     it 'should continue to check humanity until a proper response is given' do
-      set_input! 'boo', 'foo', 'y'
-      capture_output!
       interface = TicTacToe::Interface.new
-      interface.is_player_human?
-      $stdout.rewind
-      error_lines = $stdout.readlines.select do |line|
+
+      output = io_channel do |ch|
+        ch.set_input 'boo', 'foo', 'y'
+        interface.is_player_human?
+      end
+
+      error_lines = output.select do |line|
         line.match /Sorry, I didn\'t understand that./
       end
        
@@ -41,31 +41,35 @@ RSpec.describe TicTacToe::Interface do
     describe 'with a human player' do
       describe 'and the player chooses \'☯\'' do
         it 'should return \'☯\'' do
-          set_input! '☯'
-          capture_output!
           interface = TicTacToe::Interface.new
 
-          expect(interface.get_symbol).to eq('☯')
+          io_channel do |ch|
+            ch.set_input'☯'
+            expect(interface.get_symbol).to eq('☯')
+          end
         end
       end
 
       describe 'and the player chooses \'X\'' do
         it 'should return \'X\'' do
-          set_input! 'X'
-          capture_output!
           interface = TicTacToe::Interface.new
 
-          expect(interface.get_symbol).to eq('X')
+          io_channel do |ch|
+            ch.set_input 'X'
+            expect(interface.get_symbol).to eq('X')
+          end
         end
 
         describe 'but X is already taken' do
           it 'should wait until an unused symbol is given' do
-            set_input! 'X', 'X', '☯'
-            capture_output!
             interface = TicTacToe::Interface.new
-            interface.get_symbol(['X'])
-            $stdout.rewind
-            error_lines = $stdout.readlines.select do |line|
+
+            output = io_channel do |ch|
+              ch.set_input 'X', 'X', '☯'
+              interface.get_symbol(['X'])
+            end
+
+            error_lines = output.select do |line|
               line.match /Sorry, . is already taken/
             end
        

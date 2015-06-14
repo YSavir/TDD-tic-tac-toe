@@ -6,7 +6,7 @@ class TicTacToe::Interface
       $stdout.puts "Is this a human player? (y/n)"
       response = $stdin.gets.strip
       valid_response = valid_options.include?(response)
-      puts "Sorry, I didn\'t understand that." unless valid_response
+      $stdout.puts "Sorry, I didn\'t understand that." unless valid_response
     end
     return valid_human_options.include? response
   end
