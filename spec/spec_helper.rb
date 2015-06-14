@@ -10,7 +10,6 @@ RSpec.configure do |c|
   c.include IOHelpers
   c.include Iodize
   c.include FactoryGirl::Syntax::Methods
-
 end
 
 

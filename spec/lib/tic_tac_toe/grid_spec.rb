@@ -54,7 +54,6 @@ RSpec.describe TicTacToe::Grid, :type => :model do
         expect(grid.cells_with_values).to match_array([grid[0,0], grid[1, 1], grid[2, 2]])
       end
     end
-
   end
 
 end

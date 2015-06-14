@@ -22,4 +22,11 @@ class TicTacToe::Grid
     cells.select { |cell| !cell.value }
   end
 
+  def include?(other)
+    @cells.each do |cell|
+      return true if cell.equal? other
+    end
+    false
+  end
+
 end
