@@ -96,10 +96,28 @@ RSpec.describe TicTacToe::Game, :type => :model do
     end
   end
 
-  describe '#generate_grid' do
+  describe '#create_grid' do
     describe 'when told to create a 3x3 grid' do
-      it 'should create a grid with the given ' do
+      it 'should create a grid with the given coordinates' do
+        game = TicTacToe::Game.new
+
+        expect(TicTacToe::Grid).to receive(:new).with(3, 3)
+        game.create_grid(3, 3) 
       end
+
+      it 'should store save the created grid' do
+        game = TicTacToe::Game.new
+        game.create_grid(3, 3)
+
+        expect(game.grid).to be_a(TicTacToe::Grid)
+      end
+    end
+  end
+
+  describe '#turn_for' do
+    it 'should get a cell the current player and fill it with that palayer\'s symbol' do
+      game = TicTacToe::Game.new
+      
     end
   end
 
