@@ -36,13 +36,13 @@ RSpec.describe TicTacToe::Player, :type => :model do
     end
   end
 
-  describe '#choose_cell' do
+  describe '#choose_cell_from' do
     describe 'when the player is a computer' do
       it 'should pick a random cell' do
         cells = build(:grid).cells
         player = build :computer_player
        
-        expect(cells).to include(player.choose_cell(cells))
+        expect(cells).to include(player.choose_cell_from(cells))
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe TicTacToe::Player, :type => :model do
 
         io_channel do |channel|
           channel.set_input '0, 0'
-          expect(player.choose_cell(available_cells)).to be(grid[0,0])
+          expect(player.choose_cell_from(available_cells)).to be(grid[0,0])
         end
       end
 
@@ -64,7 +64,7 @@ RSpec.describe TicTacToe::Player, :type => :model do
 
         output = io_channel do |channel|
           channel.set_input '4, 4', 'some, gibberish', 'gibberish', '4', '2, 2'
-          player.choose_cell(grid.available_cells)
+          player.choose_cell_from(grid.available_cells)
         end
 
         error_lines = output.select do |line|

@@ -20,14 +20,6 @@ RSpec.describe TicTacToe::Cell, :type => :model do
       expect(cell_1.value).to eq('x')
       expect(cell_2.value).to eq('y')
     end
-
-    it "should raise an error if the cell already has a value" do
-      a = TicTacToe::Cell.new 1, 1
-      a.value = 'x'
-      error_message = 'Cells with values cannot have their values changed'
-
-      expect {a.value = 'y'}.to raise_error(error_message)
-    end
   end
 
 end

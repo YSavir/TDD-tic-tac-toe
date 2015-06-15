@@ -12,4 +12,6 @@ RSpec.configure do |c|
   c.include FactoryGirl::Syntax::Methods
 end
 
+Pry.config.input = STDIN
+Pry.config.output = STDOUT
 

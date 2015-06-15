@@ -6,6 +6,7 @@ class TicTacToe::Cell
   def initialize(row, column)
     @row = row
     @column = column
+    @value = ''
   end
 
   def coordinates
@@ -17,11 +18,7 @@ class TicTacToe::Cell
   end
 
   def value=(new_value)
-    if @value
-      raise('Cells with values cannot have their values changed')
-    else
-      @value = new_value
-    end
+    @value = new_value if new_value.is_a? String
   end
 
 end

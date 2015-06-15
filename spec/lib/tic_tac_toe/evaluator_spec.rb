@@ -12,15 +12,15 @@ RSpec.describe TicTacToe::Evaluator do
   end
 
   describe '#check_win_for' do
-    describe 'When passed an object other than a cell' do
-      it 'should raise an error' do
+    describe 'When passed an invalid object' do
+      it 'should raise an error if the object is not a cell' do
         evaluator = build :evaluator_with_grid
         expected_error = /.* is not a cell/
 
         expect { evaluator.check_win_for('')}.to raise_error(expected_error)
       end
 
-      it 'should raise an error passed a cell not of its grid' do
+      it 'should raise an error if passed a cell not of its grid' do
         evaluator = build :evaluator_with_grid
         cell = build :cell_with_value
         expected_error = 'Cell is not part of grid'

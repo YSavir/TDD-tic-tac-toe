@@ -35,7 +35,7 @@ class TicTacToe::Evaluator
 
   def validate(cell)
     raise "#{cell} is not a cell" unless cell.class == TicTacToe::Cell
-    raise "Cell must have a value to check for win" unless cell.value
+    raise "Cell must have a value to check for win" if cell.value.empty?
     raise "Cell is not part of grid" unless @grid.include? cell
   end
 end
