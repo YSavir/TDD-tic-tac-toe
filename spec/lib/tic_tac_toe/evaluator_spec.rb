@@ -58,6 +58,42 @@ RSpec.describe TicTacToe::Evaluator do
         expect(evaluator.check_win_for(grid[0, 0])).to be true
       end
     end
-  end
+
+    describe 'When there is a vertical winning combination' do
+      it 'should return true' do
+        evaluator = build :evaluator_with_grid
+        grid = evaluator.grid
+        grid[0, 0].value = 'X'
+        grid[1, 0].value = 'X'
+        grid[2, 0].value = 'X'
+
+        expect(evaluator.check_win_for(grid[0, 0])).to be true
+      end
+    end
+
+    describe 'When there is a NW-SE winning combination' do
+      it 'should return true' do
+        evaluator = build :evaluator_with_grid
+        grid = evaluator.grid
+        grid[0, 0].value = 'X'
+        grid[1, 1].value = 'X'
+        grid[2, 2].value = 'X'
+
+        expect(evaluator.check_win_for(grid[0, 0])).to be true
+      end
+    end
+ 
+    describe 'When there is a NE-SW winning combination' do
+      it 'should return true' do
+        evaluator = build :evaluator_with_grid
+        grid = evaluator.grid
+        grid[0, 2].value = 'X'
+        grid[1, 1].value = 'X'
+        grid[2, 0].value = 'X'
+
+        expect(evaluator.check_win_for(grid[0, 2])).to be true
+      end
+    end
+ end
 
 end

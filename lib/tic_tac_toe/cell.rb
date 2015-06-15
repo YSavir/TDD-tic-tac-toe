@@ -1,14 +1,15 @@
 class TicTacToe::Cell
-  attr_reader :x_coordinat, :y_coordinate
+  attr_reader :row, :column
   attr_reader :value
+  include Comparable
 
-  def initialize(x_coordinate, y_coordinate)
-    @x_coordinate = x_coordinate
-    @y_coordinate = y_coordinate
+  def initialize(row, column)
+    @row = row
+    @column = column
   end
 
   def coordinates
-    [@x_coordinate, @y_coordinate]
+    [@row, @column]
   end
 
   def ==(other)
