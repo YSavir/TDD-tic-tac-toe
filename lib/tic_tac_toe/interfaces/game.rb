@@ -36,7 +36,7 @@ class TicTacToe::Interface::Game
       valid = valid_options.include?(response)
       $stdout.puts "Sorry, I didn\'t understand that." unless valid
     end
-    TicTacToe::Game.new.play! if yes_options.include? response
+    yes_options.include? response
   end
 
   def yes_options

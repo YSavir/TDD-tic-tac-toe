@@ -43,8 +43,7 @@ class TicTacToe::Game
     cell = player.choose_cell_from available_cells
     cell.value = player.symbol
     
-    end_game if move_won_game?(cell) || no_cells_left?
-    move_player_to_end(player) 
+    move_ended_game?(cell) ? end_game : move_player_to_end(player) 
   end
 
   def play!
@@ -60,6 +59,17 @@ class TicTacToe::Game
 
   def available_cells
     @grid.available_cells
+  end
+
+  def move_ended_game?(cell)
+    if move_won_game? cell
+      @complete_type = :win
+    elsif no_cells_left?
+      @complete_type = :tie
+    else
+      return false
+    end 
+    return true
   end
 
   def complete!
@@ -80,6 +90,7 @@ class TicTacToe::Game
   def get_computer_symbol
     available_symbols.first
   end
+  
   def symbols_in_use
     players.map(&:symbol)
   end
@@ -101,8 +112,15 @@ class TicTacToe::Game
   end
 
   def end_game
-    no_cells_left? ? game_tie : game_won_by(current_player)
-    interface.play_again?
+    case @complete_type
+    when :win
+      game_won_by current_player
+    when :tie
+      game_tie
+    else
+      nil
+    end
+    self.class.new.play! if interface.play_again?
   end
   
   def move_player_to_end(player)
