@@ -2,7 +2,7 @@ class TicTacToe::Game
   attr_reader :players, :grid
 
   def initialize
-    @interface = TicTacToe::Interface::Game.new
+    interface = TicTacToe::Interface::Game.new
     @players = []
     @complete = false
   end
@@ -17,8 +17,8 @@ class TicTacToe::Game
   end
 
   def setup
-    total_players = @interface.total_players
-    rows, columns = @interface.get_grid_size
+    total_players = interface.total_players
+    rows, columns = interface.get_grid_size
     total_players.times { add_player }
     create_grid rows, columns
   end
@@ -48,6 +48,10 @@ class TicTacToe::Game
   end
 
   private
+
+  def interface
+    @interface ||= TicTacToe::Interface::Game.new
+  end
 
   def available_cells
     @grid.available_cells

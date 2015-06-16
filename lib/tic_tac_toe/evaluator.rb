@@ -13,14 +13,13 @@ class TicTacToe::Evaluator
       TicTacToe::Sequence.from_cells(@grid, cell, neighbor)
     end.flatten
     
-    possible_sequences.any? { |seq| seq.valid? }
+    possible_sequences.any?(&:valid?)
   end
 
   private
 
   def find_neighbors(cell)
-    (-1..1).to_a.repeated_permutation(2).map do |coord_mods|
-      next if coord_mods == [0, 0]
+    neighbor_modifiers.map do |coord_mods|
       row = cell.row + coord_mods[0]
       column = cell.column + coord_mods[1]
       @grid[row, column]
@@ -37,6 +36,12 @@ class TicTacToe::Evaluator
     raise "#{cell} is not a cell" unless cell.class == TicTacToe::Cell
     raise "Cell must have a value to check for win" if cell.value.empty?
     raise "Cell is not part of grid" unless @grid.include? cell
+  end
+
+  def neighbor_modifiers
+    mods = (-1..1).to_a.repeated_permutation(2).to_a
+    mods.delete([0, 0])
+    mods
   end
 end
 

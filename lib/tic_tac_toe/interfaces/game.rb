@@ -19,7 +19,7 @@ class TicTacToe::Interface::Game
   def get_grid_size
     valid = false
     until valid
-      puts 'What size should the grid be? (\'2, 2\' or \'10, 20\')'
+      puts 'What size should the grid be? (eg. \'2, 2\' or \'10, 20\')'
       sizes_string = $stdin.gets.strip
       sizes = sizes_string.split(', ').map(&:to_i)
       valid = true unless sizes.length != 2 || sizes.map(&:to_s).join(", ") != sizes_string
