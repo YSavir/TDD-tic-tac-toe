@@ -47,6 +47,11 @@ class TicTacToe::Game
     move_player_to_end(player) 
   end
 
+  def play!
+    setup
+    start!
+  end
+
   private
 
   def interface
@@ -97,6 +102,7 @@ class TicTacToe::Game
 
   def end_game
     no_cells_left? ? game_tie : game_won_by(current_player)
+    interface.play_again?
   end
   
   def move_player_to_end(player)

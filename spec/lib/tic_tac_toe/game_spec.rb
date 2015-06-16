@@ -10,7 +10,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
     end
   end
 
-  describe '#create_grid' do
+  describe 'create_grid' do
     describe 'when adding a 3x3 grid' do
       it 'should create an appropriate grid' do
         game = TicTacToe::Game.new
@@ -37,7 +37,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
     end
   end
 
-  describe '#add_player' do
+  describe 'add_player' do
     it 'should create a new player' do
       game = TicTacToe::Game.new
       expect(TicTacToe::Player).to receive(:create_and_setup)
@@ -70,7 +70,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
 
   end
 
-  describe '#players' do
+  describe 'players' do
     describe 'when the game has two players' do
       it 'should return both player' do
         game = TicTacToe::Game.new
@@ -82,7 +82,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
     end
   end
 
-  describe '#create_grid' do
+  describe 'create_grid' do
     describe 'when told to create a 3x3 grid' do
       it 'should create a grid with the given coordinates' do
         game = TicTacToe::Game.new
@@ -100,7 +100,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
     end
   end
 
-  describe '#turn_for' do
+  describe 'turn_for' do
     it 'should get a cell from the current player and fill it with that player\'s symbol' do
       game = build :game_with_grid
       game.players << build(:computer_player)
@@ -138,7 +138,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
       game.grid[1, 2].value = 'X'
       
       output = io_channel do |ch|
-        ch.set_input '1, 3'
+        ch.set_input '1, 3', 'n'
         game.turn_for(game.players.first) 
       end
 
@@ -152,7 +152,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
         game.grid[1, 2].value = 'X'
         
         output = io_channel do |ch|
-          ch.set_input '1, 3'
+          ch.set_input '1, 3', 'n'
           game.turn_for(game.players.first) 
         end
 
@@ -166,7 +166,8 @@ RSpec.describe TicTacToe::Game, :type => :model do
       it 'should declare the winner' do
         game = build :game_with_grid_and_computer_player
 
-        output = io_channel do
+        output = io_channel do |ch|
+          ch.set_input 'n'
           game.start!
         end
         
@@ -176,7 +177,8 @@ RSpec.describe TicTacToe::Game, :type => :model do
       it 'should not declare a tie' do
         game = build :game_with_grid_and_computer_player
 
-        output = io_channel do
+        output = io_channel do |ch|
+          ch.set_input 'n'
           game.start!
         end
         expect(output.join(' ')).not_to match /It's a tie!/
@@ -189,7 +191,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
         game.players << TicTacToe::Player.new('O', true)
 
         output = io_channel do |ch|
-          ch.set_input "1, 3", "1, 1", "2, 1", "1, 2", "2, 2", "2, 3", "3, 2", "3, 1", "3, 3"
+          ch.set_input "1, 3", "1, 1", "2, 1", "1, 2", "2, 2", "2, 3", "3, 2", "3, 1", "3, 3", "n"
           game.start! :no_shuffle => true
         end
 
@@ -202,7 +204,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
         all_coordinates = (1..3).to_a.repeated_permutation(3).map { |c| c.join(', ') }
         
         output = io_channel do |ch|
-          ch.set_input "1, 3", "1, 1", "2, 1", "1, 2", "2, 2", "2, 3", "3, 2", "3, 1", "3, 3"
+          ch.set_input "1, 3", "1, 1", "2, 1", "1, 2", "2, 2", "2, 3", "3, 2", "3, 1", "3, 3", 'n'
           game.start! :no_shuffle => true
         end
 

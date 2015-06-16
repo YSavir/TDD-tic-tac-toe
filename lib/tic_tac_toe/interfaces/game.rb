@@ -27,4 +27,29 @@ class TicTacToe::Interface::Game
     end
     return sizes
   end
+
+  def play_again?
+    valid = false
+    until valid
+      puts "Want to play again? (y/n)"
+      response = $stdin.gets.strip
+      valid = valid_options.include?(response)
+      $stdout.puts "Sorry, I didn\'t understand that." unless valid
+    end
+    TicTacToe::Game.new.play! if yes_options.include? response
+  end
+
+  def yes_options
+    ['yes', 'y']
+  end
+
+  def no_options
+    ['no', 'n']
+  end
+
+  def valid_options
+    yes_options + no_options
+  end
+
+
 end
