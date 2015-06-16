@@ -7,7 +7,6 @@ Dir["spec/support/**/*.rb"].each { |f| require File.expand_path(f) }
 Dir["spec/factories/**/*.rb"].each { |f| require File.expand_path(f) }
 
 RSpec.configure do |c|
-  c.include IOHelpers
   c.include Iodize
   c.include FactoryGirl::Syntax::Methods
 end
