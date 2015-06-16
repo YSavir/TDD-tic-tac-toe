@@ -53,8 +53,8 @@ RSpec.describe TicTacToe::Player, :type => :model do
         player = build :human_player
 
         io_channel do |channel|
-          channel.set_input '0, 0'
-          expect(player.choose_cell_from(available_cells)).to be(grid[0,0])
+          channel.set_input '1, 1'
+          expect(player.choose_cell_from(available_cells)).to be(grid[1,1])
         end
       end
 

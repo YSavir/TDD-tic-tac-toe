@@ -40,7 +40,7 @@ RSpec.describe TicTacToe::Evaluator do
     describe 'without a winning combination' do
       it 'should return false' do
         evaluator = build :evaluator_with_grid
-        cell = evaluator.grid[0, 0]
+        cell = evaluator.grid[1, 1]
         cell.value = 'X'
 
         expect(evaluator.check_win_for(cell)).to be false
@@ -51,11 +51,11 @@ RSpec.describe TicTacToe::Evaluator do
       it 'should return true' do
         evaluator = build :evaluator_with_grid
         grid = evaluator.grid
-        grid[0, 0].value = 'X'
-        grid[0, 1].value = 'X'
-        grid[0, 2].value = 'X'
+        grid[1, 1].value = 'X'
+        grid[1, 2].value = 'X'
+        grid[1, 3].value = 'X'
 
-        expect(evaluator.check_win_for(grid[0, 0])).to be true
+        expect(evaluator.check_win_for(grid[1, 1])).to be true
       end
     end
 
@@ -63,11 +63,11 @@ RSpec.describe TicTacToe::Evaluator do
       it 'should return true' do
         evaluator = build :evaluator_with_grid
         grid = evaluator.grid
-        grid[0, 0].value = 'X'
-        grid[1, 0].value = 'X'
-        grid[2, 0].value = 'X'
+        grid[1, 1].value = 'X'
+        grid[2, 1].value = 'X'
+        grid[3, 1].value = 'X'
 
-        expect(evaluator.check_win_for(grid[0, 0])).to be true
+        expect(evaluator.check_win_for(grid[1, 1])).to be true
       end
     end
 
@@ -75,11 +75,11 @@ RSpec.describe TicTacToe::Evaluator do
       it 'should return true' do
         evaluator = build :evaluator_with_grid
         grid = evaluator.grid
-        grid[0, 0].value = 'X'
         grid[1, 1].value = 'X'
         grid[2, 2].value = 'X'
+        grid[3, 3].value = 'X'
 
-        expect(evaluator.check_win_for(grid[0, 0])).to be true
+        expect(evaluator.check_win_for(grid[1, 1])).to be true
       end
     end
  
@@ -87,11 +87,11 @@ RSpec.describe TicTacToe::Evaluator do
       it 'should return true' do
         evaluator = build :evaluator_with_grid
         grid = evaluator.grid
-        grid[0, 2].value = 'X'
-        grid[1, 1].value = 'X'
-        grid[2, 0].value = 'X'
+        grid[1, 3].value = 'X'
+        grid[2, 2].value = 'X'
+        grid[3, 1].value = 'X'
 
-        expect(evaluator.check_win_for(grid[0, 2])).to be true
+        expect(evaluator.check_win_for(grid[1, 3])).to be true
       end
     end
  end

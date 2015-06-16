@@ -134,11 +134,11 @@ RSpec.describe TicTacToe::Game, :type => :model do
 
     it 'should check if that move ended the game' do
       game = build :game_with_grid_and_human_player
-      game.grid[0, 0].value = 'X'
-      game.grid[0, 1].value = 'X'
+      game.grid[1, 1].value = 'X'
+      game.grid[1, 2].value = 'X'
       
       output = io_channel do |ch|
-        ch.set_input '0, 2'
+        ch.set_input '1, 3'
         game.turn_for(game.players.first) 
       end
 
@@ -148,11 +148,11 @@ RSpec.describe TicTacToe::Game, :type => :model do
     describe 'if the turn wins the game' do
       it 'should end the game' do
         game = build :game_with_grid_and_human_player
-        game.grid[0, 0].value = 'X'
-        game.grid[0, 1].value = 'X'
+        game.grid[1, 1].value = 'X'
+        game.grid[1, 2].value = 'X'
         
         output = io_channel do |ch|
-          ch.set_input '0, 2'
+          ch.set_input '1, 3'
           game.turn_for(game.players.first) 
         end
 
@@ -189,7 +189,7 @@ RSpec.describe TicTacToe::Game, :type => :model do
         game.players << TicTacToe::Player.new('O', true)
 
         output = io_channel do |ch|
-          ch.set_input "0, 2", "0, 0", "1, 0", "0, 1", "1, 1", "1, 2", "2, 1", "2, 0", "2, 2"
+          ch.set_input "1, 3", "1, 1", "2, 1", "1, 2", "2, 2", "2, 3", "3, 2", "3, 1", "3, 3"
           game.start! :no_shuffle => true
         end
 
@@ -199,10 +199,10 @@ RSpec.describe TicTacToe::Game, :type => :model do
       it 'should not declare a winner' do
         game = build :game_with_grid_and_human_player
         game.players << TicTacToe::Player.new('O', true)
-        all_coordinates = (0..2).to_a.repeated_permutation(2).map { |c| c.join(', ') }
+        all_coordinates = (1..3).to_a.repeated_permutation(3).map { |c| c.join(', ') }
         
         output = io_channel do |ch|
-          ch.set_input "0, 2", "0, 0", "1, 0", "0, 1", "1, 1", "1, 2", "2, 1", "2, 0", "2, 2"
+          ch.set_input "1, 3", "1, 1", "2, 1", "1, 2", "2, 2", "2, 3", "3, 2", "3, 1", "3, 3"
           game.start! :no_shuffle => true
         end
 

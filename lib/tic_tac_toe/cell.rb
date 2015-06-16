@@ -1,7 +1,6 @@
 class TicTacToe::Cell
   attr_reader :row, :column
   attr_reader :value
-  include Comparable
 
   def initialize(row, column)
     @row = row
