@@ -20,6 +20,12 @@ RSpec.describe TicTacToe::Grid, :type => :model do
 
       expect(grid_coordinates).to match_array(expected_grid_coordinates) 
     end
+
+    it 'should create the appropriate amound of rows' do
+      grid = build :grid
+
+      expect(grid.rows).to have(3).rows
+    end
   end
 
   describe "#[]" do
@@ -56,4 +62,17 @@ RSpec.describe TicTacToe::Grid, :type => :model do
     end
   end
 
-end
+  describe '#to_s' do
+    it 'should return a stingified representation of the grid' do
+      grid = build :grid
+      grid[1, 1].value = 'O'
+      grid[2, 2].value = 'X'
+      grid[3, 3].value = 'O'
+
+      expected_string = " R\\C   1  |  2  |  3  \n\n  1    O  |     |     \n--------------------\n  2       |  X  |     \n--------------------\n  3       |     |  O  "
+          
+      expect(grid.to_s).to eq(expected_string)
+      end
+    end
+
+  end

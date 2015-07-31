@@ -78,8 +78,8 @@ coverage.
     starting/ending the program rather than immediately starting by create a
     `TicTacToe::Game` instance.
 - `Iodize` could be improved/built on.
-- Abstract `rows` and `columns` into their own class to simplify language and
-    clean up some files.
+- ~~Abstract `rows` and `columns` into their own class to simplify language and
+    clean up some files.~~
 - Allow configuration of options, such as whether or not to shuffle players and
     how many cells in a row are required for a win.
 - Other things too. It's hard to remember everything.

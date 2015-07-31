@@ -1,10 +1,10 @@
 class TicTacToe::Grid
   attr_reader :cells
 
-  def initialize(rows, columns)
+  def initialize(height, width)
     @cells = []
-    @height = rows
-    @width = columns
+    @height, @width = height, width
+    generate_rows
     generate_cells
   end
 
@@ -28,33 +28,28 @@ class TicTacToe::Grid
   end
 
   def to_s
-    output_string = header
-    output_string << rows.map do |row|
-      row_to_string(row)
-    end.join(line_break)
-    output_string
+    header + rows.map { |k, v| v.to_s } .join(line_break)
   end
 
+  def rows
+    @rows ||= {}
+  end
 
   private
 
   def add_cell(row, column)
-    @cells << TicTacToe::Cell.new(row, column)
+    new_cell = TicTacToe::Cell.new(row, column)
+    @cells << new_cell
+    rows[row].add_cell new_cell
   end
 
   def header
     col_string = col_values.map(&:to_s)
-                  .map { |col| col.center(5) }
-                  .join('|')
+        .map { |col| col.center(5) }
+        .join('|')
     output_string = 'R\C'.center(5)
     output_string += col_string
     output_string << "\n\n"
-  end
-
-  def row_to_string(row)
-    row_index = row[0].row.to_s.center(5)
-    values_string = row.map { |cell| cell.value.center(5) }.join('|')
-    return row_index + values_string
   end
  
   def line_break
@@ -67,10 +62,10 @@ class TicTacToe::Grid
     end
   end
 
-  def rows
-    return @rows if @rows
-    row_values.map do |val|
-      @cells.select { |c| c.row == val }.sort_by(&:column)
+  def generate_rows
+    @height.times do |num|
+      num += 1
+      rows[num] = TicTacToe::Row.new(num)
     end
   end
 
